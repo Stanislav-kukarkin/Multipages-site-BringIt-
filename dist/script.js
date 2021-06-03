@@ -3176,9 +3176,18 @@ function (_Slider) {
       this.decorizeSlides();
 
       if (this.autoPlay) {
-        setInterval(function () {
+        var paused;
+        paused = setInterval(function () {
           return _this3.nextSlide();
-        }, 5000);
+        }, 1000);
+        this.slides[0].parentNode.addEventListener('mouseenter', function () {
+          clearInterval(paused);
+        });
+        this.slides[0].parentNode.addEventListener('mouseleave', function () {
+          setInterval(function () {
+            return _this3.nextSlide();
+          }, 3000);
+        });
       }
     }
   }]);

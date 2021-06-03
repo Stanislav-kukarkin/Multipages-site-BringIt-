@@ -41,6 +41,7 @@ export default class MiniSlider extends Slider {
     }
 
     bindTriggers(){
+
         this.next.addEventListener('click', () => this.nextSlide());
 
         this.prev.addEventListener('click', () =>{
@@ -54,10 +55,11 @@ export default class MiniSlider extends Slider {
             }
 
         });
-        
+
     }
 
     init(){
+
         this.container.style.cssText = `
         display: flex;
         flex-wrap: wrap;
@@ -69,7 +71,15 @@ export default class MiniSlider extends Slider {
         this.decorizeSlides();
 
         if(this.autoPlay){
-            setInterval(() => this.nextSlide(), 5000);
+            let paused;
+            paused = setInterval(() => this.nextSlide(), 1000);
+
+            this.slides[0].parentNode.addEventListener('mouseenter',() => {
+                clearInterval(paused);
+            });
+            this.slides[0].parentNode.addEventListener('mouseleave',() => {
+                setInterval(() => this.nextSlide(), 3000);
+            });
         }
     }
 }
